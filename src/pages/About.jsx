@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Typography, Button, Container, Grid, Card, CardContent, Paper, Modal, IconButton } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import fullMarathonMedal from '../assets/images/fullMarathonMedal.png';
 import halfMarathonMedal from '../assets/images/halfmarathonmedal.png';
@@ -8,6 +9,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WarningIcon from '@mui/icons-material/Warning';
 
 const AboutPage = () => {
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -26,7 +28,7 @@ const AboutPage = () => {
       {/* Hero Section */}
       <Box sx={{ 
         bgcolor: 'background.default',
-        background: 'linear-gradient(135deg, rgba(46,204,113,0.95) 0%, rgba(21,153,87,0.95) 100%)',
+        background: 'linear-gradient(90deg, #3FAF5D 0%, #1C4C89 100%)',
         color: 'white',
         py: 12,
         mb: 8,
@@ -173,22 +175,23 @@ const AboutPage = () => {
                     }}
                   />
                 </Box>
-                <Typography variant="h3" sx={{ mb: 3, fontWeight: 800, color: 'primary.main' }}>
+                                <Typography variant="h4" sx={{ mb: 3, fontWeight: 800, color: 'primary.main' }}>
                   $40
                 </Typography>
                 <Button 
                   variant="contained"
                   size="large"
+                  onClick={() => navigate('/register')}
                   sx={{ 
                     py: 1.5,
                     px: 4,
                     borderRadius: 3,
-                    background: 'linear-gradient(135deg, #2ecc71 0%, #159957 100%)',
+                    background: 'linear-gradient(90deg, #3FAF5D 0%, #1C4C89 100%)',
                     textTransform: 'none',
                     fontSize: '1.1rem',
                     fontWeight: 600,
                     '&:hover': {
-                      background: 'linear-gradient(135deg, #159957 0%, #2ecc71 100%)',
+                      background: 'linear-gradient(90deg, #1C4C89 0%, #3FAF5D 100%)',
                     }
                   }}
                 >
@@ -243,16 +246,17 @@ const AboutPage = () => {
                 <Button 
                   variant="contained"
                   size="large"
+                  onClick={() => navigate('/register')}
                   sx={{ 
                     py: 1.5,
                     px: 4,
                     borderRadius: 3,
-                    background: 'linear-gradient(135deg, #2ecc71 0%, #159957 100%)',
+                    background: 'linear-gradient(90deg, #3FAF5D 0%, #1C4C89 100%)',
                     textTransform: 'none',
                     fontSize: '1.1rem',
                     fontWeight: 600,
                     '&:hover': {
-                      background: 'linear-gradient(135deg, #159957 0%, #2ecc71 100%)',
+                      background: 'linear-gradient(90deg, #1C4C89 0%, #3FAF5D 100%)',
                     }
                   }}
                 >

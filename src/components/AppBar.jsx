@@ -28,7 +28,9 @@ const MyAppBar = React.forwardRef((props, ref) => {
 						position={isHome ? "fixed" : "sticky"}
 						elevation={0}
 						sx={{
-							backgroundColor: isHome ? 'transparent' : 'rgba(0,0,0,0.3)',
+							background: isHome 
+								? 'transparent' 
+								: 'linear-gradient(90deg, rgba(63,175,93,0.95) 0%, rgba(28,76,137,0.95) 100%)',
 							color: '#fff',
 							boxShadow: 'none',
 							width: '100vw',

@@ -1,7 +1,7 @@
 
 
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import MyAppBar from '../components/AppBar';
 import { Outlet, useLocation } from 'react-router-dom';
 import { AppBarHeightProvider } from '../components/AppBarHeightContext';
@@ -10,6 +10,10 @@ import { AppBarHeightProvider } from '../components/AppBarHeightContext';
 const MainLayoutInner = () => {
   const location = useLocation();
   const isHome = location.pathname === '/';
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
   // const appBarHeight = useAppBarHeight();
   return (
     <>
