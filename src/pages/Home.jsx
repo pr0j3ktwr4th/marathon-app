@@ -35,10 +35,13 @@ const Home = () => {
         backgroundImage: `url(${sojuHeroImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
+        position: 'relative',
+        zIndex: 0,
       }}
     >
       <Box sx={{ mb: 4, textAlign: 'center' }}>

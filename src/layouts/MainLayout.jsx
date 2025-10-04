@@ -15,10 +15,18 @@ const MainLayoutInner = () => {
     <>
       {/* AppBar is rendered by AppBarHeightProvider with ref */}
       {isHome ? (
-        <Outlet />
-      ) : (
-        <div style={{ paddingTop: appBarHeight }}>
+        <div style={{ position: 'relative' }}>
           <Outlet />
+        </div>
+      ) : (
+        <div style={{ 
+          minHeight: '100vh',
+          backgroundColor: '#f5f5f5',
+          boxSizing: 'border-box'
+        }}>
+          <div style={{ padding: '20px' }}>
+            <Outlet />
+          </div>
         </div>
       )}
     </>

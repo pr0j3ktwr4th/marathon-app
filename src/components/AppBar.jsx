@@ -25,13 +25,17 @@ const MyAppBar = React.forwardRef((props, ref) => {
 			return (
 				<Box sx={{ flexGrow: 1 }} ref={ref}>
 					<AppBar
-						position="fixed"
+						position={isHome ? "fixed" : "sticky"}
 						elevation={0}
 						sx={{
-							backgroundColor: isHome ? 'transparent' : 'rgba(0,0,0,0.5)',
+							backgroundColor: isHome ? 'transparent' : 'rgba(0,0,0,0.3)',
 							color: '#fff',
 							boxShadow: 'none',
 							width: '100vw',
+							top: 0,
+							left: 0,
+							backdropFilter: isHome ? 'none' : 'blur(10px)',
+							transition: 'all 0.3s ease',
 						}}
 					>
 						<Toolbar sx={{ backgroundColor: 'transparent', color: 'inherit', px: { xs: 4, md: 12 }, py: 3 }}>
