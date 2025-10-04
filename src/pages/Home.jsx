@@ -1,22 +1,99 @@
 
-import React from 'react';
-import { Container, Typography, Button, Box } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Button, Box } from '@mui/material';
+import sojuHeroImage from '../assets/images/sojuHeroImage.png';
+
+// Korea Standard Time (KST) is UTC+9
+// Always count down to 2025-10-15 00:00:00 KST (which is 2025-10-14 15:00:00 UTC)
+const targetDate = new Date(Date.UTC(2025, 9, 14, 15, 0, 0)); // Months are 0-indexed
 
 const Home = () => {
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date();
+      const diff = targetDate - now;
+      if (diff > 0) {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        setTimeLeft({ days, hours, minutes, seconds });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <Container maxWidth="md" sx={{ textAlign: 'center', py: 8 }}>
-      <Box>
-        <Typography variant="h2" component="h1" gutterBottom>
-          Welcome to Marathon App
-        </Typography>
-        <Typography variant="h5" color="text.secondary" paragraph>
-          Track your training, monitor your progress, and get ready for race day!
-        </Typography>
-        <Button variant="contained" color="primary" size="large" href="#">
-          Get Started
-        </Button>
+    <Box
+      sx={{
+        width: '100vw',
+        height: '100vh',
+        backgroundImage: `url(${sojuHeroImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+      }}
+    >
+      <Box sx={{ mb: 4, textAlign: 'center' }}>
+        <span style={{
+          fontSize: 64,
+          fontWeight: 900,
+          letterSpacing: 2,
+          color: '#fff',
+          textShadow: '0 4px 24px rgba(0,0,0,0.5)',
+          display: 'block',
+        }}>
+          SOJU <span style={{ color: '#ffe066' }}>MARATHON</span>
+        </span>
+        <span style={{
+          fontSize: 32,
+          fontWeight: 400,
+          letterSpacing: 8,
+          color: '#fff',
+          opacity: 0.9,
+          display: 'block',
+          marginTop: 8,
+        }}>
+          SOJU RUN SERIES
+        </span>
       </Box>
-    </Container>
+      <Button 
+        variant="contained" 
+        color="secondary" 
+        size="large" 
+        href="/register"
+        sx={{
+          fontSize: 28,
+          fontWeight: 700,
+          px: 6,
+          py: 2.2,
+          borderRadius: 999,
+          background: 'linear-gradient(90deg, #2ecc71 0%, #159957 100%)',
+          textTransform: 'uppercase',
+          letterSpacing: 2,
+          boxShadow: 'none',
+          '&:hover': {
+            background: 'linear-gradient(90deg, #159957 0%, #2ecc71 100%)',
+            boxShadow: 'none',
+          },
+        }}
+      >
+        REGISTER
+      </Button>
+      <Box sx={{ mt: 4, p: 2, background: 'rgba(0,0,0,0.5)', borderRadius: 2, color: '#fff', minWidth: 220, textAlign: 'center' }}>
+        <span style={{ fontSize: 24, fontWeight: 600 }}>
+          {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
+        </span>
+        <div>until signup deadline!</div>
+      </Box>
+    </Box>
   );
 };
 
