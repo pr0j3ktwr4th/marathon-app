@@ -41,8 +41,8 @@ const MyAppBar = React.forwardRef((props, ref) => {
 						<Toolbar sx={{ backgroundColor: 'transparent', color: 'inherit', px: { xs: 4, md: 12 }, py: 3 }}>
 						{/* Logo and title */}
 						<Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-							<Box sx={{ mr: 2, cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => navigate('/')}> 
-								<SojuLogo style={{ marginRight: 8 }} />
+										<Box sx={{ mr: 0.5, cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => navigate('/')}> 
+											<SojuLogo style={{ marginRight: 4 }} />
 												<Box sx={{ display: { xs: 'none', sm: 'block' } }}>
 													<Typography 
 														variant="h5" 
@@ -65,7 +65,7 @@ const MyAppBar = React.forwardRef((props, ref) => {
 									variant="button"
 									sx={{
 										color: '#fff',
-										fontWeight: 500,
+										fontWeight: 700,
 										letterSpacing: 2,
 										mx: 2,
 										cursor: 'pointer',

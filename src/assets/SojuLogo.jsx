@@ -1,17 +1,13 @@
 import React from 'react';
 
+import sojuLogoYellow from './images/SojuLogo.png';
+
 const SojuLogo = ({ style }) => (
-  <svg
-    width="36"
-    height="36"
-    viewBox="0 0 36 36"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    style={style}
-  >
-    <rect x="10" y="4" width="16" height="28" rx="4" stroke="white" strokeWidth="2.5" fill="none"/>
-    <rect x="15" y="2" width="6" height="6" rx="2" stroke="white" strokeWidth="2" fill="none"/>
-  </svg>
+  <img
+    src={sojuLogoYellow}
+    alt="Soju Logo"
+  style={{ width: 72, height: 96, objectFit: 'contain', ...style }}
+  />
 );
 
 export default SojuLogo;

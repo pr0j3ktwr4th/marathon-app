@@ -44,9 +44,9 @@ const Home = () => {
         zIndex: 0,
       }}
     >
-      <Box sx={{ mb: 4, textAlign: 'center' }}>
+      <Box sx={{ mb: 5, textAlign: 'center' }}>
         <span style={{
-          fontSize: 64,
+          fontSize: 88,
           fontWeight: 900,
           letterSpacing: 2,
           color: '#fff',
@@ -56,13 +56,13 @@ const Home = () => {
           SOJU <span style={{ color: '#ffe066' }}>MARATHON</span>
         </span>
         <span style={{
-          fontSize: 32,
-          fontWeight: 400,
-          letterSpacing: 8,
+          fontSize: 44,
+          fontWeight: 700,
+          letterSpacing: 10,
           color: '#fff',
-          opacity: 0.9,
+          opacity: 0.95,
           display: 'block',
-          marginTop: 8,
+          marginTop: 12,
         }}>
           SOJU RUN SERIES
         </span>
@@ -73,15 +73,16 @@ const Home = () => {
         size="large" 
         href="/register"
         sx={{
-          fontSize: 28,
+          fontSize: 20,
           fontWeight: 700,
-          px: 6,
-          py: 2.2,
+          px: 4,
+          py: 1.2,
           borderRadius: 999,
           background: 'linear-gradient(90deg, #2ecc71 0%, #159957 100%)',
           textTransform: 'uppercase',
           letterSpacing: 2,
           boxShadow: 'none',
+          minWidth: 180,
           '&:hover': {
             background: 'linear-gradient(90deg, #159957 0%, #2ecc71 100%)',
             boxShadow: 'none',

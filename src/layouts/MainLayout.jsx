@@ -4,13 +4,13 @@
 import React from 'react';
 import MyAppBar from '../components/AppBar';
 import { Outlet, useLocation } from 'react-router-dom';
-import { AppBarHeightProvider, useAppBarHeight } from '../components/AppBarHeightContext';
+import { AppBarHeightProvider } from '../components/AppBarHeightContext';
 
 
 const MainLayoutInner = () => {
   const location = useLocation();
   const isHome = location.pathname === '/';
-  const appBarHeight = useAppBarHeight();
+  // const appBarHeight = useAppBarHeight();
   return (
     <>
       {/* AppBar is rendered by AppBarHeightProvider with ref */}
