@@ -1,11 +1,15 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import { useNavigate, useLocation } from 'react-router-dom';
 import SojuLogo from '../assets/SojuLogo';
 
@@ -18,6 +22,11 @@ const navLinks = [
 
 const MyAppBar = React.forwardRef((props, ref) => {
 	const navigate = useNavigate();
+	const [mobileOpen, setMobileOpen] = useState(false);
+
+	const handleDrawerToggle = () => {
+		setMobileOpen(!mobileOpen);
+	};
 	const location = useLocation();
 	// Find the current tab index based on the path
 		const isHome = location.pathname === '/';
@@ -40,27 +49,42 @@ const MyAppBar = React.forwardRef((props, ref) => {
 							transition: 'all 0.3s ease',
 						}}
 					>
-						<Toolbar sx={{ backgroundColor: 'transparent', color: 'inherit', px: { xs: 4, md: 12 }, py: 3 }}>
+						<Toolbar sx={{ backgroundColor: 'transparent', color: 'inherit', px: { xs: 2, sm: 4, md: 12 }, py: { xs: 2, sm: 3 } }}>
 						{/* Logo and title */}
 						<Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-										<Box sx={{ mr: 0.5, cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => navigate('/')}> 
-											<SojuLogo style={{ marginRight: 4 }} />
-												<Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-													<Typography 
-														variant="h5" 
-														sx={{ fontWeight: 900, letterSpacing: 3, fontSize: 32, lineHeight: 1, color: '#fff' }}>
-														SOJU
-													</Typography>
-													<Typography 
-														variant="subtitle1" 
-														sx={{ fontWeight: 700, letterSpacing: 4, fontSize: 18, color: '#fff', opacity: 0.9 }}>
-														RUN SERIES
-													</Typography>
-												</Box>
+							<Box sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center',  }} onClick={() => navigate('/')}> 
+								<SojuLogo />
+								<Box sx={{ display: 'block' }}>
+									<Typography 
+										variant="h5" 
+										sx={{ 
+											fontWeight: 900, 
+											letterSpacing: { xs: 1.5, sm: 2, md: 3 }, 
+											fontSize: { xs: 20, sm: 24, md: 32 }, 
+											lineHeight: 1, 
+											color: '#fff' 
+										}}>
+										SOJU
+									</Typography>
+									<Typography 
+										variant="subtitle1" 
+										sx={{ 
+											display: { xs: 'block', sm: 'block' },
+											fontWeight: 700, 
+											letterSpacing: { xs: 2, sm: 3, md: 4 }, 
+											fontSize: { xs: 12, sm: 14, md: 18 }, 
+											color: '#fff', 
+											opacity: 0.9,
+											whiteSpace: 'nowrap'  // Add this line to prevent wrapping
+										}}>
+										RUN SERIES
+									</Typography>
+								</Box>
 							</Box>
 						</Box>
-						{/* Centered nav links */}
-						<Box sx={{ flexGrow: 2, display: 'flex', justifyContent: 'center', gap: 4 }}>
+
+						{/* Desktop nav links */}
+						<Box sx={{ flexGrow: 2, display: { xs: 'none', sm: 'none', md: 'flex' }, justifyContent: 'center', gap: 4 }}>
 							{navLinks.map(link => (
 								<Typography
 									key={link.path}
@@ -72,6 +96,7 @@ const MyAppBar = React.forwardRef((props, ref) => {
 										mx: 2,
 										cursor: 'pointer',
 										fontSize: 16,
+										whiteSpace: 'nowrap',  // Prevent text wrapping
 										opacity: location.pathname.startsWith(link.path) ? 1 : 0.8,
 										borderBottom: location.pathname.startsWith(link.path) ? '2px solid #fff' : 'none',
 										transition: 'opacity 0.2s',
@@ -83,8 +108,104 @@ const MyAppBar = React.forwardRef((props, ref) => {
 								</Typography>
 							))}
 						</Box>
-						{/* CTA Button */}
-						<Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
+
+						{/* Mobile menu button */}
+						<IconButton
+							sx={{ 
+								display: { xs: 'flex', md: 'none' },
+								ml: 2,
+								color: '#fff'
+							}}
+							onClick={handleDrawerToggle}
+							aria-label="open drawer"
+						>
+							<MenuIcon />
+						</IconButton>
+
+						{/* Mobile Drawer */}
+						<Drawer
+							variant="temporary"
+							anchor="right"
+							open={mobileOpen}
+							onClose={handleDrawerToggle}
+							ModalProps={{
+								keepMounted: true, // Better mobile performance
+							}}
+							sx={{
+								display: { xs: 'block', md: 'none' },
+								'& .MuiDrawer-paper': {
+									boxSizing: 'border-box',
+									width: 240,
+									background: 'linear-gradient(180deg, rgba(63,175,93,0.98) 0%, rgba(28,76,137,0.98) 100%)',
+									backdropFilter: 'blur(10px)',
+								},
+							}}
+						>
+							<Box sx={{ pt: 6, pb: 2, px: 2 }}>
+								<List>
+									{navLinks.map((link) => (
+										<ListItem
+											button
+											key={link.path}
+											onClick={() => {
+												navigate(link.path);
+												handleDrawerToggle();
+											}}
+											sx={{
+												mb: 1,
+												borderRadius: 1,
+												backgroundColor: location.pathname.startsWith(link.path) 
+													? 'rgba(255,255,255,0.1)' 
+													: 'transparent',
+												'&:hover': {
+													backgroundColor: 'rgba(255,255,255,0.1)',
+												},
+											}}
+										>
+											<ListItemText 
+												primary={link.label} 
+												sx={{
+													color: '#fff',
+													'& .MuiListItemText-primary': {
+														fontWeight: 700,
+														letterSpacing: 1,
+													},
+												}}
+											/>
+										</ListItem>
+									))}
+									<ListItem
+										button
+										onClick={() => {
+											navigate('/register');
+											handleDrawerToggle();
+										}}
+										sx={{
+											mt: 2,
+											borderRadius: 1,
+											background: 'linear-gradient(90deg, #2ecc71 0%, #159957 100%)',
+											'&:hover': {
+												background: 'linear-gradient(90deg, #159957 0%, #2ecc71 100%)',
+											},
+										}}
+									>
+										<ListItemText
+											primary="REGISTER"
+											sx={{
+												color: '#fff',
+												'& .MuiListItemText-primary': {
+													fontWeight: 700,
+													letterSpacing: 1,
+												},
+											}}
+										/>
+									</ListItem>
+								</List>
+							</Box>
+						</Drawer>
+
+						{/* Desktop CTA Button */}
+						<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
 							<Button
 								variant="contained"
 								onClick={() => navigate('/register')}
@@ -95,7 +216,8 @@ const MyAppBar = React.forwardRef((props, ref) => {
 									fontWeight: 700,
 									px: 4,
 									py: 1.2,
-									fontSize: 18,
+									fontSize: 16,
+									whiteSpace: 'nowrap',  // Prevent text wrapping
 									boxShadow: 'none',
 									textTransform: 'none',
 									letterSpacing: 1,
@@ -105,7 +227,7 @@ const MyAppBar = React.forwardRef((props, ref) => {
 									},
 								}}
 							>
-								TAKE PART
+								REGISTER
 							</Button>
 						</Box>
 					</Toolbar>

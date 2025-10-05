@@ -5,6 +5,9 @@ import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
 import About from './pages/About';
 import Course from './pages/Course';
+import Results from './pages/Results';
+import Register from './pages/Register';
+import RegistrationSuccess from './pages/RegistrationSuccess';
 
 function App() {
   return (
@@ -14,8 +17,9 @@ function App() {
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="course" element={<Course />} />
-          <Route path="results" element={<div>Results Page</div>} />
-          <Route path="register" element={<div>Register Page</div>} />
+          <Route path="results" element={<Results />} />
+          <Route path="register" element={<Register />} />
+          <Route path="registration-success" element={<RegistrationSuccess />} />
         </Route>
       </Routes>
     </BrowserRouter>

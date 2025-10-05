@@ -1,13 +1,60 @@
 
 import React, { useEffect, useState } from 'react';
 import { Button, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import sojuHeroImage from '../assets/images/sojuHeroImage.png';
 
 // Korea Standard Time (KST) is UTC+9
 // Always count down to 2025-10-15 00:00:00 KST (which is 2025-10-14 15:00:00 UTC)
+// October 15th, 2025 (Registration Deadline)
 const targetDate = new Date(Date.UTC(2025, 9, 14, 15, 0, 0)); // Months are 0-indexed
 
+const TimeBlock = ({ value, label }) => (
+  <Box
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      mx: { xs: 1, sm: 2 },
+    }}
+  >
+    <Box
+      sx={{
+        background: 'rgba(255, 255, 255, 0.9)',
+        borderRadius: 2,
+        p: { xs: 1, sm: 2 },
+        minWidth: { xs: '60px', sm: '80px' },
+        textAlign: 'center',
+      }}
+    >
+      <Box
+        component="span"
+        sx={{
+          fontSize: { xs: '1.5rem', sm: '2.5rem' },
+          fontWeight: 900,
+          color: '#3FAF5D',
+          display: 'block',
+        }}
+      >
+        {value}
+      </Box>
+      <Box
+        component="span"
+        sx={{
+          fontSize: { xs: '0.75rem', sm: '0.875rem' },
+          color: '#1C4C89',
+          fontWeight: 600,
+          textTransform: 'uppercase',
+        }}
+      >
+        {label}
+      </Box>
+    </Box>
+  </Box>
+);
+
 const Home = () => {
+  const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
@@ -30,72 +77,92 @@ const Home = () => {
   return (
     <Box
       sx={{
-        width: '100vw',
-        height: '100vh',
-        backgroundImage: `url(${sojuHeroImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
+        minHeight: '100vh',
+        position: 'relative',
+        overflow: 'hidden',
+        backgroundColor: '#000',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection: 'column',
-        position: 'relative',
-        zIndex: 0,
+        width: '100%'
       }}
     >
-      <Box sx={{ mb: 5, textAlign: 'center' }}>
-        <span style={{
-          fontSize: 88,
-          fontWeight: 900,
-          letterSpacing: 2,
-          color: '#fff',
-          textShadow: '0 4px 24px rgba(0,0,0,0.5)',
-          display: 'block',
-        }}>
-          SOJU <span style={{ color: '#ffe066' }}>MARATHON</span>
-        </span>
-        <span style={{
-          fontSize: 44,
-          fontWeight: 700,
-          letterSpacing: 10,
-          color: '#fff',
-          opacity: 0.95,
-          display: 'block',
-          marginTop: 12,
-        }}>
-          SOJU RUN SERIES
-        </span>
-      </Box>
-      <Button 
-        variant="contained" 
-        color="secondary" 
-        size="large" 
-        href="/register"
+      {/* Background Image */}
+      <Box
         sx={{
-          fontSize: 20,
-          fontWeight: 700,
-          px: 4,
-          py: 1.2,
-          borderRadius: 999,
-          background: 'linear-gradient(90deg, #2ecc71 0%, #159957 100%)',
-          textTransform: 'uppercase',
-          letterSpacing: 2,
-          boxShadow: 'none',
-          minWidth: 180,
-          '&:hover': {
-            background: 'linear-gradient(90deg, #159957 0%, #2ecc71 100%)',
-            boxShadow: 'none',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          '& img': {
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity: 0.7,
           },
         }}
       >
-        REGISTER
-      </Button>
-      <Box sx={{ mt: 4, p: 2, background: 'rgba(0,0,0,0.5)', borderRadius: 2, color: '#fff', minWidth: 220, textAlign: 'center' }}>
-        <span style={{ fontSize: 24, fontWeight: 600 }}>
-          {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
-        </span>
-        <div>until signup deadline!</div>
+        <img src={sojuHeroImage} alt="Soju Run background" />
+      </Box>
+
+      {/* Content */}
+      <Box
+        sx={{
+          position: 'relative',
+          zIndex: 1,
+          textAlign: 'center',
+          px: { xs: 2, sm: 4 },
+          width: '100%',
+          maxWidth: '100vw',
+        }}
+      >
+        {/* Countdown Timer */}
+        <Box 
+          sx={{ 
+            mb: { xs: 4, sm: 6 },
+            mx: 'auto',
+            maxWidth: '100%',
+            overflow: 'hidden'
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              mb: { xs: 3, sm: 4 },
+              flexWrap: 'nowrap',
+            }}
+          >
+            <TimeBlock value={timeLeft.days} label="days" />
+            <TimeBlock value={timeLeft.hours} label="hours" />
+            <TimeBlock value={timeLeft.minutes} label="minutes" />
+            <TimeBlock value={timeLeft.seconds} label="seconds" />
+          </Box>
+
+          <Box sx={{ mb: { xs: 3, sm: 4 } }}>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => navigate('/register')}
+              sx={{
+                background: 'linear-gradient(90deg, #3FAF5D 0%, #1C4C89 100%)',
+                color: '#fff',
+                px: { xs: 4, sm: 6 },
+                py: { xs: 1.5, sm: 2 },
+                fontSize: { xs: '1rem', sm: '1.25rem' },
+                fontWeight: 700,
+                borderRadius: '999px',
+                width: { xs: '90%', sm: 'auto' },
+                '&:hover': {
+                  background: 'linear-gradient(90deg, #3FAF5D 20%, #1C4C89 120%)',
+                },
+              }}
+            >
+              REGISTER NOW
+            </Button>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
