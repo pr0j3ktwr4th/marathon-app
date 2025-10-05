@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { useNavigate, useLocation } from 'react-router-dom';
 import SojuLogo from '../assets/SojuLogo';
@@ -144,8 +144,7 @@ const MyAppBar = React.forwardRef((props, ref) => {
 							<Box sx={{ pt: 6, pb: 2, px: 2 }}>
 								<List>
 									{navLinks.map((link) => (
-										<ListItem
-											button
+										<ListItemButton
 											key={link.path}
 											onClick={() => {
 												navigate(link.path);
@@ -172,10 +171,9 @@ const MyAppBar = React.forwardRef((props, ref) => {
 													},
 												}}
 											/>
-										</ListItem>
+										</ListItemButton>
 									))}
-									<ListItem
-										button
+									<ListItemButton
 										onClick={() => {
 											navigate('/register');
 											handleDrawerToggle();
@@ -199,7 +197,7 @@ const MyAppBar = React.forwardRef((props, ref) => {
 												},
 											}}
 										/>
-									</ListItem>
+									</ListItemButton>
 								</List>
 							</Box>
 						</Drawer>
