@@ -236,13 +236,11 @@ const About = () => {
           sx={{ 
             mb: { xs: 4, sm: 6 },
             justifyContent: 'center',
-            maxWidth: '1000px', // reduced from 1200px
+            maxWidth: '1000px',
             mx: 'auto'
           }}>
           <Grid 
-            item 
-            xs={12} 
-            sm={6}  // changed from md={6} to sm={6}
+            size={{ xs: 12, sm: 6 }}
             sx={{ 
               display: 'flex',
               justifyContent: 'center',
@@ -271,9 +269,7 @@ const About = () => {
             />
           </Grid>
           <Grid 
-            item 
-            xs={12} 
-            sm={6}  // changed from md={6} to sm={6}
+            size={{ xs: 12, sm: 6 }}
             sx={{ 
               display: 'flex',
               justifyContent: 'center',
