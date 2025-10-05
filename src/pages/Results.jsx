@@ -5,68 +5,59 @@ import {
   Typography, 
   Paper,
   ToggleButton, 
-  ToggleButtonGroup
+  ToggleButtonGroup,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 
 // Sample data for full marathon
 const fullMarathonData = [
-  { id: 1, rank: 1, racerNumber: 'F1001', name: 'John Smith', age: 28, time: '2:45:30', pace: '6:18/km' },
-  { id: 2, rank: 2, racerNumber: 'F1002', name: 'Sarah Johnson', age: 32, time: '2:48:15', pace: '6:24/km' },
+  { id: 1, rank: 1, racerNumber: 'F1001', name: 'John Smith', firstName: 'John', age: 28, time: '2:45:30', pace: '6:18/km' },
+  { id: 2, rank: 2, racerNumber: 'F1002', name: 'Sarah Johnson', firstName: 'Sarah', age: 32, time: '2:48:15', pace: '6:24/km' },
 ];
 
 // Sample data for half marathon
 const halfMarathonData = [
-  { id: 1, rank: 1, racerNumber: 'H2001', name: 'Alex Turner', age: 24, time: '1:15:30', pace: '5:42/km' },
-  { id: 2, rank: 2, racerNumber: 'H2002', name: 'Jessica Lee', age: 29, time: '1:17:45', pace: '5:51/km' },
+  { id: 1, rank: 1, racerNumber: 'H2001', name: 'Alex Turner', firstName: 'Alex', age: 24, time: '1:15:30', pace: '5:42/km' },
+  { id: 2, rank: 2, racerNumber: 'H2002', name: 'Jessica Lee', firstName: 'Jessica', age: 29, time: '1:17:45', pace: '5:51/km' },
 ];
 
-const columns = [
-  { 
-    field: 'rank', 
-    headerName: 'Rank', 
-    width: 100,
-    headerAlign: 'center',
-    align: 'center',
-  },
-  { 
-    field: 'racerNumber', 
-    headerName: 'Racer #', 
-    width: 120,
-    headerAlign: 'center',
-    align: 'center',
-  },
-  { 
-    field: 'name', 
-    headerName: 'Name', 
-    width: 200,
-    flex: 1 
-  },
-  { 
-    field: 'age', 
-    headerName: 'Age', 
-    width: 120,
-    headerAlign: 'center',
-    align: 'center',
-  },
-  { 
-    field: 'time', 
-    headerName: 'Time', 
-    width: 130,
-    headerAlign: 'center',
-    align: 'center',
-  },
-  { 
-    field: 'pace', 
-    headerName: 'Pace', 
-    width: 130,
-    headerAlign: 'center',
-    align: 'center',
-  }
+// Desktop (full) columns - compact widths
+const desktopColumns = [
+  { field: 'rank', headerName: 'Rank', width: 80, headerAlign: 'center', align: 'center', cellClassName: 'col-rank', flex: 0 },
+  { field: 'racerNumber', headerName: '#', width: 80, headerAlign: 'center', align: 'center', flex: 0 },
+  // name allowed to grow more than other columns
+  { field: 'name', headerName: 'Name', minWidth: 140, headerAlign: 'left', align: 'left', cellClassName: 'col-name', flex: 2 },
+  { field: 'age', headerName: 'Age', width: 60, headerAlign: 'center', align: 'center', flex: 0 },
+  { field: 'time', headerName: 'Time', width: 90, headerAlign: 'center', align: 'center', cellClassName: 'col-time', flex: 0 },
+  { field: 'pace', headerName: 'Pace', width: 90, headerAlign: 'center', align: 'center', flex: 0 }
+];
+
+// Mobile (compact) columns - minimal widths and ellipsize name
+const mobileColumns = [
+  { field: 'rank', headerName: 'Rank', width: 70, headerAlign: 'center', align: 'center', cellClassName: 'col-rank' },
+  { field: 'racerNumber', headerName: '#', width: 70, headerAlign: 'center', align: 'center' },
+  { field: 'firstName', headerName: 'Name', minWidth: 100, maxWidth: 180, headerAlign: 'left', align: 'left', cellClassName: 'col-name' },
+  { field: 'time', headerName: 'Time', width: 90, headerAlign: 'center', align: 'center', cellClassName: 'col-time' }
 ];
 
 const ResultsPage = () => {
   const [selectedDistance, setSelectedDistance] = useState('full');
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  // DataGrid props that differ between mobile and desktop
+  const gridDesktopProps = {
+    disableColumnSelector: false,
+    disableColumnFilter: false,
+    disableColumnMenu: false,
+  };
+  const gridMobileProps = {
+    disableColumnSelector: true,
+    disableColumnFilter: true,
+    disableColumnMenu: true,
+  };
 
   const handleDistanceChange = (event, newDistance) => {
     if (newDistance !== null) {
@@ -100,7 +91,8 @@ const ResultsPage = () => {
             exclusive
             onChange={handleDistanceChange}
             aria-label="race distance"
-            sx={{ mb: 4 }}
+            orientation={isMobile ? 'vertical' : 'horizontal'}
+            sx={{ mb: 4, width: isMobile ? '100%' : 'auto', '& .MuiToggleButton-root': { width: isMobile ? '100%' : 'auto' } }}
           >
             <ToggleButton 
               value="full" 
@@ -142,7 +134,7 @@ const ResultsPage = () => {
         <Paper 
           elevation={0}
           sx={{ 
-            height: 635,
+            height: isMobile ? 'auto' : 635,
             width: '100%',
             borderRadius: 3,
             overflow: 'hidden',
@@ -164,14 +156,47 @@ const ResultsPage = () => {
         >
           <DataGrid
             rows={selectedDistance === 'full' ? fullMarathonData : halfMarathonData}
-            columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            columns={isMobile ? mobileColumns : desktopColumns}
+            pageSize={isMobile ? 5 : 10}
+            rowsPerPageOptions={isMobile ? [5] : [10]}
+            autoHeight={isMobile}
             disableSelectionOnClick
+            density="compact"
+            {...(isMobile ? gridMobileProps : gridDesktopProps)}
             sx={{
               '& .MuiDataGrid-row:hover': {
                 backgroundColor: 'rgba(0,0,0,0.02)',
               },
+              '& .MuiDataGrid-cell': {
+                py: 0.4,
+                px: 0.75,
+              },
+              '& .MuiDataGrid-cell.col-rank': {
+                px: 2.5,
+                fontWeight: 700,
+              },
+              '& .MuiDataGrid-cell.col-name': {
+                px: 0.5,
+                py: 0.3,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                maxWidth: '100%'
+              },
+              '& .MuiDataGrid-cell.col-time': {
+                px: 0.5,
+                py: 0.3,
+                textAlign: 'center'
+              },
+              // Truncate header text if it overflows
+              '& .MuiDataGrid-columnHeaderTitle': {
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              },
+              '& .MuiDataGrid-columnHeader': {
+                py: 0.5,
+              }
             }}
           />
         </Paper>

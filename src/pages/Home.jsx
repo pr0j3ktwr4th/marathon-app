@@ -117,6 +117,14 @@ const Home = () => {
           maxWidth: '100vw',
         }}
       >
+        {/* Stylized Page title (SOJU / MARATHON / SOJU RUN SERIES) */}
+        <Box sx={{ mb: { xs: 3, sm: 4 } }}>
+          <Box sx={{ lineHeight: 1, mb: 1 }}>
+            <Box component="div" sx={{ color: '#FFD700', fontWeight: 900, fontSize: 'clamp(2.5rem, 10vw, 6.75rem)', letterSpacing: '0.06em' }}>SOJU</Box>
+            <Box component="div" sx={{ color: '#fff', fontWeight: 900, fontSize: 'clamp(2.75rem, 12vw, 7rem)', letterSpacing: '0.02em', mt: { xs: 0.5, sm: 0 } }}>MARATHON</Box>
+            <Box component="div" sx={{ color: 'rgba(255,255,255,0.9)', fontWeight: 600, fontSize: 'clamp(0.8rem, 2.2vw, 1rem)', mt: { xs: 0.5, sm: 0.5 }, letterSpacing: '0.18em' }}>SOJU RUN SERIES</Box>
+          </Box>
+        </Box>
         {/* Countdown Timer */}
         <Box 
           sx={{ 

@@ -336,7 +336,7 @@ const About = () => {
               Note: most participants are military and portions of the course run on base property.
             </Typography>
             <Typography sx={{ mb: 1 }}>
-              Support: There is only one water station located at the Finish Line (green point). Runners should carry their own hydration and any personal first-aid supplies. The Half Marathon consists of two loops of the half course and is run separately from the Full Marathon.
+              Support: There is only one water station located at the Finish Line (green point). Runners should carry their own hydration and any personal first-aid supplies. Both the Full and Half Marathons will have their own separate routes.
             </Typography>
             <Typography sx={{ mb: 1 }}>
               Safety & responsibility: No course marshals, road guards, or official markings will be provided. Runners are responsible for their own safety, must obey traffic and local laws when crossing roads, and should plan accordingly.
